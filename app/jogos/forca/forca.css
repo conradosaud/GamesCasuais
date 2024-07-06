@@ -1,0 +1,19 @@
+/* 
+    Evite usar muito CSS nestes exemplos, pois eles provavelmente serão substituídos na versão final.
+    Use CSS apenas se for necessário para ajudar na visualização do jogo. Neste exemplo, é preciso
+    manter todo conteúdo alinhado (flex) para fazer sentido a visualização do jogo.
+    Não precisa pensar em responsividade agora.
+*/
+
+.words, .errorList{
+    display: flex;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.words p, .errorList p{
+    margin-right: 20px;
+}
+
+.errorList p{
+    color: red;
+}

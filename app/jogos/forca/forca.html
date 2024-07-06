@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Importação de arquivos de CSS -->
+    <link rel="stylesheet" href="forca.css" />
+
+</head>
+<body>
+
+    <!-- Criar todo o jogo dentro desta tag, pois assim é mais fácil pegála daqui e importar em outro local -->
+    <section id="game" >
+
+        <h1> Jogo da Forca </h1>
+
+        <p> Adivinhe a palavra: </p>
+        <div class="words">
+            <p>_</p>
+            <p>_</p>
+            <p>_</p>
+            <p>_</p>
+            <p>_</p>
+        </div>
+
+        <form onsubmit="sendForm( event )" >
+            <label>
+                Tente uma letra:
+                <input id="inputLetter" maxlength="1" minlength="1" required />
+            </label>
+            <button>Enviar</button>
+        </form>
+
+        <div class="errorList">
+            <p>Erros <span class="errorListCount">0</span>/5: </p>
+        </div>
+
+    </section>
+    
+    <!-- Importação de arquivos de JavaScript -->
+    <script type="text/javascript" src="forca.js" ></script>
+</body>
+</html>
