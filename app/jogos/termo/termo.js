@@ -1,4 +1,7 @@
 const palavra_certa = ["JORGE"]
+
+let lineCount = 0;
+
 const linhas = [
     {
       inputs: [
@@ -75,27 +78,45 @@ function VerificaPalavra(){
     
     if (palavra == palavra_certa){
       alert("ACERTOU!!");
-      confereCor(0, 0);
+      confereCor(0);
     }else{
-      confereCor(0, 0);
+      confereCor(0);
+    }
+
+    lineCount++;
+
+  }
+}
+
+function confereCor(palavra) {
+  for (i = 0; i < linhas[lineCount].inputs.length; i++) {
+    if (linhas[lineCount].inputs[i].style.background != "green"){
+      if (linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(0) ||
+          linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(1) ||
+          linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(2) ||
+          linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(3) ||
+          linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(4)) {
+          linhas[lineCount].inputs[i].style.background = "rgb(207, 204, 0)"
+      }
+
+      if (linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(i)){
+        linhas[lineCount].inputs[i].style.background = "green"
+      }
     }
   }
 }
 
-function confereCor(linha, palavra) {
-  for (i = 0; i < linhas[linha].inputs.length; i++) {
-    if (linhas[linha].inputs[i].style.background != "green"){
-      if (linhas[linha].inputs[i].value == palavra_certa[palavra].charAt(0) ||
-          linhas[linha].inputs[i].value == palavra_certa[palavra].charAt(1) ||
-          linhas[linha].inputs[i].value == palavra_certa[palavra].charAt(2) ||
-          linhas[linha].inputs[i].value == palavra_certa[palavra].charAt(3) ||
-          linhas[linha].inputs[i].value == palavra_certa[palavra].charAt(4)) {
-          linhas[linha].inputs[i].style.background = "rgb(207, 204, 0)"
-      }
+iniciaTeste();
+function iniciaTeste(){
 
-      if (linhas[linha].inputs[i].value == palavra_certa[palavra].charAt(i)){
-        linhas[linha].inputs[i].style.background = "green"
-      }
-    }
+  let html = "";
+  for(let i = 0; i < 5; i++){
+    html += `<li>Número ${ removeAccents("Éóúâ") }</li>`
   }
+
+  document.querySelector(".teste").innerHTML = `
+    <ul>
+      ${html}
+    </ul>
+  `;
 }
