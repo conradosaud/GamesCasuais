@@ -7,10 +7,11 @@
     height: 50px;
     font-size: 25px;
     text-align: center;
+    margin: 1px;
 }
 
 #Termo .linha{
     margin-left: auto;
     margin-right: auto;
-    width: 290px;
+    width: 300px;
 }
