@@ -1,122 +1,96 @@
-const palavra_certa = ["JORGE"]
+var game;
+
+document.addEventListener("DOMContentLoaded", function() {
+    game = document.querySelector("#Termo");
+    StartScreen();
+});
+
+const right_word = ["JORGE"];
 
 let lineCount = 0;
 
-const linhas = [
-    {
-      inputs: [
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input")
-      ]
-    },
-    {
-      inputs: [
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input")
-      ]
-    },
-    {
-      inputs: [
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input")
-      ]
-    },
-    {
-      inputs: [
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input")
-      ]
-    },
-    {
-      inputs: [
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input")
-      ]
-    },
-    {
-      inputs: [
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input"),
-        document.createElement("input")
-      ]
-    }
-  ];
+let inputFocus = 1;
 
-linhas[0].inputs.map(function(event) {
-    document.getElementById('linha').appendChild(event);});
-linhas[1].inputs.map(function(event) {
-    document.getElementById('linha').appendChild(event);});
-linhas[2].inputs.map(function(event) {
-    document.getElementById('linha').appendChild(event);});
-linhas[3].inputs.map(function(event) {
-    document.getElementById('linha').appendChild(event);});
-linhas[4].inputs.map(function(event) {
-    document.getElementById('linha').appendChild(event);});
-linhas[5].inputs.map(function(event) {
-    document.getElementById('linha').appendChild(event);});
-
-function VerificaPalavra(){
-  for (i = 0; i < linhas.length; i++) {
-    let palavra = linhas[i].inputs[0].value + linhas[i].inputs[1].value + linhas[i].inputs[2].value + linhas[i].inputs[3].value + linhas[i].inputs[4].value;
-    
-    if (palavra == palavra_certa){
-      alert("ACERTOU!!");
-      confereCor(0);
-    }else{
-      confereCor(0);
-    }
-
-    lineCount++;
-
-  }
-}
-
-function confereCor(palavra) {
-  for (i = 0; i < linhas[lineCount].inputs.length; i++) {
-    if (linhas[lineCount].inputs[i].style.background != "green"){
-      if (linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(0) ||
-          linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(1) ||
-          linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(2) ||
-          linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(3) ||
-          linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(4)) {
-          linhas[lineCount].inputs[i].style.background = "rgb(207, 204, 0)"
-      }
-
-      if (linhas[lineCount].inputs[i].value == palavra_certa[palavra].charAt(i)){
-        linhas[lineCount].inputs[i].style.background = "green"
-      }
-    }
-  }
-}
-
-iniciaTeste();
-function iniciaTeste(){
+function StartScreen(){
 
   let html = "";
   for(let i = 0; i < 5; i++){
-    html += `<li>Número ${ removeAccents("Éóúâ") }</li>`
+    html += `<input id = "txt${i}" class = "${i}" maxlength="1" oninput="Typing(event)" onClick="Clicking(event)"></input>`
   }
 
-  document.querySelector(".teste").innerHTML = `
-    <ul>
-      ${html}
-    </ul>
+  game.querySelector(".line").innerHTML = `
+    <form>
+      <div id = "line0">
+        ${html}
+      </div>
+      <div id = "line1">
+        ${html}
+      </div>
+      <div id = "line2">
+        ${html}
+      </div>
+      <div id = "line3">
+        ${html}
+      </div>
+      <div id = "line4">
+        ${html}
+      </div>
+      <div id = "line5">
+        ${html}
+      </div>
+    </form>
   `;
+}
+
+function Clicking(event){
+  inputFocus = event.target.id.match(/\d+/g) - 0;
+  inputFocus = inputFocus + 1;
+}
+
+function Typing(event){
+  event.target.value = removeAccents(capitalizeFirstLetter(event.target.value));
+  
+  game.querySelector(`#line${lineCount} #txt${inputFocus}`).focus();
+
+  inputFocus ++;
+
+  if (inputFocus >= 5){
+    inputFocus = 0;
+  }
+}
+
+function CheckWord(){
+
+  let word = game.querySelector(`#line${lineCount} #txt0`).value +
+             game.querySelector(`#line${lineCount} #txt1`).value +
+             game.querySelector(`#line${lineCount} #txt2`).value +
+             game.querySelector(`#line${lineCount} #txt3`).value +
+             game.querySelector(`#line${lineCount} #txt4`).value;
+    
+  if (word == right_word[0]){
+    alert("ACERTOU!!");
+    CheckColor(0);
+  }else{
+    CheckColor(0);
+  }
+  lineCount ++;
+}
+
+function CheckColor(word) {
+  for (i = 0; i < right_word[word].length; i++) {
+    let line = game.querySelector(`#line${lineCount} #txt${i}`);
+
+    if (line.style.background != "green"){
+      if(line.value == right_word[word].charAt(0) ||
+         line.value == right_word[word].charAt(1) ||
+         line.value == right_word[word].charAt(2) ||
+         line.value == right_word[word].charAt(3) ||
+         line.value == right_word[word].charAt(4)){
+        line.style.background = "rgb(207, 204, 0)"
+      } 
+      if (line.value == right_word[word].charAt(i)){
+        line.style.background = "green"
+      }
+    }
+  }
 }
