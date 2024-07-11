@@ -15,7 +15,7 @@ function StartScreen(){
 
   let html = "";
   for(let i = 0; i < 5; i++){
-    html += `<input id = "txt${i}" class = "${i}" maxlength="1" oninput="Typing(event)" onClick="Clicking(event)"></input>`
+    html += `<input id = "txt${i}" class = "${i}" maxlength="1" oninput="Typing(event)" onClick="Clicking(event)" onfocus="Clicking(event)" onkeydown="MoveInput(event)"></input>`
   }
 
   game.querySelector(".line").innerHTML = `
@@ -42,21 +42,44 @@ function StartScreen(){
   `;
 }
 
+function MoveInput(event){
+  
+  if(inputFocus >= 4){
+    inputFocus = 4;
+  }
+  
+  else if(inputFocus <= 0){
+    inputFocus = 0;
+  }
+
+  if(event.key === "ArrowLeft"){
+    inputFocus = inputFocus - 1;
+    game.querySelector(`#line${lineCount} #txt${inputFocus}`).focus();
+    console.log(inputFocus);
+  } 
+  
+  else if(event.key === "ArrowRight"){
+    inputFocus = inputFocus + 1;
+    game.querySelector(`#line${lineCount} #txt${inputFocus}`).focus();
+    console.log(inputFocus);
+  } 
+  else if (event.key === 'Enter') {
+    CheckWord();
+  }
+  else if (event.key === 'Backspace') {
+    event.target.value = "";
+  }
+}
+
 function Clicking(event){
   inputFocus = event.target.id.match(/\d+/g) - 0;
-  inputFocus = inputFocus + 1;
 }
 
 function Typing(event){
   event.target.value = removeAccents(capitalizeFirstLetter(event.target.value));
-  
+  inputFocus = inputFocus + 1;
   game.querySelector(`#line${lineCount} #txt${inputFocus}`).focus();
-
-  inputFocus ++;
-
-  if (inputFocus >= 5){
-    inputFocus = 0;
-  }
+  console.log(inputFocus);
 }
 
 function CheckWord(){
@@ -72,8 +95,10 @@ function CheckWord(){
     CheckColor(0);
   }else{
     CheckColor(0);
+    lineCount ++;
+    inputFocus = 0;
+    game.querySelector(`#line${lineCount} #txt${inputFocus}`).focus();
   }
-  lineCount ++;
 }
 
 function CheckColor(word) {
@@ -92,5 +117,7 @@ function CheckColor(word) {
         line.style.background = "green"
       }
     }
+    console.log(line.value);
+    console.log(right_word[word].charAt(0));
   }
 }
