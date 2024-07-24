@@ -28,3 +28,8 @@ function formatDate(date) {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
 }
+
+// Remove caracteres especiais como por exempo "!?/\ "
+function removeSpecialCharacter(text){
+    return text.normalize("NFD").replace(/[^a-zA-Z]/g, '');
+}

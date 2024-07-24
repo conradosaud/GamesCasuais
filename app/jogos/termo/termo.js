@@ -656,7 +656,6 @@ const right_word = [
   "FUNDO",
   "PODAR",
   "CEITA",
-  "JAZER",
   "TRAGO",
   "UFANO",
   "SOFIA",
@@ -1859,11 +1858,14 @@ function Clicking(event){
 }
 
 function Typing(event){
-  event.target.value = removeAccents(capitalizeFirstLetter(event.target.value));
-  inputFocus = Math.min(4, inputFocus + 1);
+  event.target.value = removeAccents(removeSpecialCharacter(event.target.value).toUpperCase());
 
-  let nextInput = game.querySelector(`#line${lineCount} #txt${inputFocus}`);
-  nextInput.focus();
+  if (event.target.value != ""){
+    inputFocus = Math.min(4, inputFocus + 1);
+  
+    let nextInput = game.querySelector(`#line${lineCount} #txt${inputFocus}`);
+    nextInput.focus();
+  }
 }
 
 function CheckWord(){
